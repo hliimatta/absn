@@ -1,0 +1,10 @@
+name: absn
+version: 0.1.0
+licence: MIT
+authors:
+  - Harri Liimatta (hliimatta) <mail@hliimatta.me>
+description: |
+  Small command line tool for absence.io
+targets:
+  absn:
+    main: src/app.cr

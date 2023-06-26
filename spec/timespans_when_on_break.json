@@ -1,0 +1,58 @@
+{
+	"skip": 0,
+	"limit": 50,
+	"count": 50,
+	"totalCount": 1920,
+	"data": [
+		{
+			"compensations": [],
+			"source": {
+				"sourceType": "browser",
+				"sourceId": "manual"
+			},
+			"_id": "2",
+			"type": "break",
+			"start": "2023-06-14T15:00:00.000Z",
+			"end": null,
+			"commentary": null,
+			"timezone": "+0300",
+			"millisecondOffset": 10800000,
+			"timezoneName": "manual",
+			"createdOn": "2023-06-15T02:51:32.107Z",
+			"modifiedOn": "2023-06-15T02:52:46.085Z",
+			"userId": "1",
+			"companyId": "1",
+			"createdById": "1",
+			"modifiedById": "1",
+			"labelIds": [],
+			"effectiveStart": "2023-06-14T15:00:00.000Z",
+			"startInTimezone": "2023-06-14T18:00:00.000+03:00"
+		},
+		{
+			"compensations": [],
+			"source": {
+				"sourceType": "browser",
+				"sourceId": "stopwatch"
+			},
+			"_id": "1",
+			"type": "work",
+			"start": "2023-06-14T08:41:23.534Z",
+			"end": "2023-06-14T09:25:12.571Z",
+			"commentary": null,
+			"timezone": "+0300",
+			"millisecondOffset": 10800000,
+			"timezoneName": "manual",
+			"createdOn": "2023-06-14T08:41:23.672Z",
+			"modifiedOn": "2023-06-14T09:25:12.623Z",
+			"userId": "1",
+			"companyId": "1",
+			"createdById": "1",
+			"modifiedById": "1",
+			"labelIds": [],
+			"effectiveStart": "2023-06-14T08:41:00.000Z",
+			"effectiveEnd": "2023-06-14T09:25:00.000Z",
+			"startInTimezone": "2023-06-14T11:41:23.534+03:00",
+			"endInTimezone": "2023-06-14T12:25:12.571+03:00"
+		}
+  ]
+}

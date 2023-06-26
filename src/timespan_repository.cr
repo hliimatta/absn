@@ -1,0 +1,46 @@
+require "json"
+
+abstract class TimespanRepository
+  abstract def last : JSON::Any
+  abstract def start(userId : String, type : String, start : Time) : JSON::Any
+  abstract def stop(timespanId : String, stop : Time) : JSON::Any
+
+  class Fake < TimespanRepository
+    def self.new
+      self.new("")
+    end
+
+    def initialize(@response : String)
+    end
+
+    def last : JSON::Any
+      unless @response.empty?
+        json = JSON.parse(@response)
+        return json["data"][0]
+      end
+      JSON::Any.new("")
+    end
+
+    def start(userId : String, type : String, start : Time) : JSON::Any
+      content = File.read("spec/created_timespan.json")
+      unless content.empty?
+        json = JSON.parse(content)
+        hash = json.as_h
+        hash["startInTimezone"] = JSON::Any.new(start.to_s("%Y-%m-%dT%H:%M:%S.%3N%z"))
+        return JSON.parse(hash.to_json)
+      end
+      JSON::Any.new("")
+    end
+
+    def stop(timespanId : String, stop : Time) : JSON::Any
+      content = File.read("spec/created_timespan.json")
+      unless content.empty?
+        json = JSON.parse(content)
+        hash = json.as_h
+        hash["endInTimezone"] = JSON::Any.new(stop.to_s("%Y-%m-%dT%H:%M:%S.%3N%z"))
+        return JSON.parse(hash.to_json)
+      end
+      JSON::Any.new("")
+    end
+  end
+end

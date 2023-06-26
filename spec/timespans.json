@@ -1,0 +1,60 @@
+{
+	"skip": 0,
+	"limit": 50,
+	"count": 50,
+	"totalCount": 1919,
+	"data": [
+		{
+			"compensations": [],
+			"source": {
+				"sourceType": "browser",
+				"sourceId": "stopwatch"
+			},
+			"_id": "2",
+			"type": "work",
+			"start": "2021-09-01T05:00:15.954Z",
+			"end": "2021-09-01T12:49:38.188Z",
+			"commentary": null,
+			"timezone": "+0300",
+			"millisecondOffset": 10800000,
+			"timezoneName": "EEST",
+			"createdOn": "2021-09-01T05:47:15.962Z",
+			"modifiedOn": "2021-09-01T12:49:38.194Z",
+			"userId": "1",
+			"companyId": "1",
+			"createdById": "1",
+			"modifiedById": "1",
+			"labelIds": [],
+			"effectiveStart": "2021-09-01T05:00:00.000Z",
+			"effectiveEnd": "2021-09-01T12:49:00.000Z",
+			"startInTimezone": "2023-06-14T18:00:00.000+03:00",
+			"endInTimezone": "2023-06-14T19:20:00.000+03:00"
+		},
+		{
+			"compensations": [],
+			"source": {
+				"sourceType": "browser",
+				"sourceId": "stopwatch"
+			},
+			"_id": "1",
+			"type": "work",
+			"start": "2021-09-02T01:57:20.697Z",
+			"end": "2021-09-02T02:50:30.102Z",
+			"commentary": null,
+			"timezone": "+0300",
+			"millisecondOffset": 10800000,
+			"timezoneName": "EEST",
+			"createdOn": "2021-09-02T01:57:20.702Z",
+			"modifiedOn": "2021-09-02T02:50:30.110Z",
+			"userId": "1",
+			"companyId": "1",
+			"createdById": "1",
+			"modifiedById": "1",
+			"labelIds": [],
+			"effectiveStart": "2021-09-02T01:57:00.000Z",
+			"effectiveEnd": "2021-09-02T02:50:00.000Z",
+			"startInTimezone": "2021-09-02T04:57:20.697+03:00",
+			"endInTimezone": "2021-09-02T05:50:30.102+03:00"
+		}
+  ]
+}

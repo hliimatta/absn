@@ -1,0 +1,24 @@
+{
+	"compensations": [],
+	"source": {
+		"sourceType": "",
+		"sourceId": ""
+	},
+	"_id": "1",
+	"type": "work",
+	"start": "2023-06-26T02:20:00.000Z",
+	"end": null,
+	"commentary": null,
+	"timezone": "+0300",
+	"millisecondOffset": 10800000,
+	"timezoneName": "UTC",
+	"createdOn": "2023-06-26T02:49:31.593Z",
+	"modifiedOn": "2023-06-26T02:49:31.593Z",
+	"userId": "1",
+	"companyId": "1",
+	"createdById": "1",
+	"modifiedById": "1",
+	"labelIds": [],
+	"effectiveStart": "2023-06-26T02:20:00.000Z",
+	"startInTimezone": "2023-06-26T05:20:00.000+03:00"
+}
