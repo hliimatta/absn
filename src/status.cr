@@ -1,4 +1,5 @@
 require "./command.cr"
+require "./timespan.cr"
 require "./timespan_repository.cr"
 
 class Status < Command
@@ -35,9 +36,9 @@ class Status < Command
 
   private def totals_for_day(json : JSON::Any) : String
     time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    timespans = @repository.timespans(time)
-    # Timespan.new(timespans).totals
-    "1h 20m (0h 30m)"
+    entries = @repository.timespans(time)
+    timespan = Timespan.new(entries)
+    "#{timespan.total_work} (#{timespan.total_break})"
   end
 
   private def type(json : JSON::Any) : String
