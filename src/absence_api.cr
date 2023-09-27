@@ -41,6 +41,10 @@ module Absence
       JSON.parse(response)
     end
 
+    def timespans(time : Time) : JSON::Any
+      JSON::Any.new("")
+    end
+
     private def hawk_token(method : String, path : String, host : String) : String
       nonce = Random::Secure.hex(3)
       timestamp = Time.utc.to_unix

@@ -14,7 +14,7 @@ class Status < Command
     if json["endInTimezone"]?
       "Last: #{last_date(json)} - #{last_duration(json)}"
     else
-      "#{type(json)} since #{start_time(json)}"
+      "#{type(json)} since #{start_time(json)} - #{totals_for_day(json)}"
     end
   end
 
@@ -31,6 +31,13 @@ class Status < Command
 
   private def start_time(json : JSON::Any) : String
     Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y %H:%M")
+  end
+
+  private def totals_for_day(json : JSON::Any) : String
+    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+    timespans = @repository.timespans(time)
+    # Timespan.new(timespans).totals
+    "1h 20m (0h 30m)"
   end
 
   private def type(json : JSON::Any) : String

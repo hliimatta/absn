@@ -42,5 +42,9 @@ abstract class TimespanRepository
       end
       JSON::Any.new("")
     end
+
+    def timespans(time : Time) : JSON::Any
+      JSON::Any.new("")
+    end
   end
 end
