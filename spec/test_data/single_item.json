@@ -1,8 +1,4 @@
 {
-	"skip": 0,
-	"limit": 50,
-	"count": 50,
-	"totalCount": 1919,
 	"data": [
 		{
 			"compensations": [],
@@ -30,5 +26,5 @@
 			"startInTimezone": "2023-06-14T18:00:00.000+03:00",
 			"endInTimezone": "2023-06-14T19:20:00.000+03:00"
 		}
-  ]
+		]
 }

@@ -4,15 +4,15 @@ require "../src/status.cr"
 
 describe Absn do
   it "returns current status if no commands given and working is started" do
-    when_command_is_run(given_status_command("./spec/timespans_when_working.json")).should eq "Working since 14.06.2023 18:00"
+    when_command_is_run(given_status_command("./spec/timespans_when_working.json")).should eq "Working since 14.06.2023 18:00 - 0h 43m (0h 0m)"
   end
 
   it "returns current status if no commands given and working is stopped" do
-    when_command_is_run(given_status_command("./spec/timespans.json")).should eq "Last: 14.06.2023 - 1h 20m"
+    when_command_is_run(given_status_command("./spec/timespans.json")).should eq "Last: 14.06.2023 - 1h 20m - Total: 1h 20m (0h 0m)"
   end
 
   it "returns correct status if no commands given and break is started" do
-    when_command_is_run(given_status_command("./spec/timespans_when_on_break.json")).should eq "On a break since 14.06.2023 18:00"
+    when_command_is_run(given_status_command("./spec/timespans_when_on_break.json")).should eq "On a break since 14.06.2023 18:00 - 0h 43m (0h 0m)"
   end
 end
 

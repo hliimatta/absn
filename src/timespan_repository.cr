@@ -4,6 +4,7 @@ abstract class TimespanRepository
   abstract def last : JSON::Any
   abstract def start(userId : String, type : String, start : Time) : JSON::Any
   abstract def stop(timespanId : String, stop : Time) : JSON::Any
+  abstract def timespans(time : Time) : JSON::Any
 
   class Fake < TimespanRepository
     def self.new
@@ -39,6 +40,14 @@ abstract class TimespanRepository
         hash = json.as_h
         hash["endInTimezone"] = JSON::Any.new(stop.to_s("%Y-%m-%dT%H:%M:%S.%3N%z"))
         return JSON.parse(hash.to_json)
+      end
+      JSON::Any.new("")
+    end
+
+    def timespans(time : Time) : JSON::Any
+      unless @response.empty?
+        json = JSON.parse(@response)
+        return json["data"]
       end
       JSON::Any.new("")
     end

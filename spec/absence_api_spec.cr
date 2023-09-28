@@ -10,5 +10,8 @@ describe Absence::API do
         Config.new("./spec/absence_api.json").key
       ).last.to_s.should contain "startInTimezone"
     end
+
+    it "returns timespans for date" do
+    end
   end
 end

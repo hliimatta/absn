@@ -1,4 +1,5 @@
 require "./command.cr"
+require "./report.cr"
 require "./timespan_repository.cr"
 
 class Status < Command
@@ -11,11 +12,15 @@ class Status < Command
   end
 
   private def message(json : JSON::Any) : String
-    if json["endInTimezone"]?
-      "Last: #{last_date(json)} - #{last_duration(json)}"
-    else
-      "#{type(json)} since #{start_time(json)}"
-    end
+    json["endInTimezone"]? ? last_message(json) : active_message(json)
+  end
+
+  private def last_message(json : JSON::Any) : String
+    "Last: #{last_date(json)} - #{last_duration(json)} - Total: #{totals_for_day(json)}"
+  end
+
+  private def active_message(json : JSON::Any) : String
+    "#{type(json)} since #{start_time(json)} - #{totals_for_day(json)}"
   end
 
   private def last_date(json : JSON::Any) : String
@@ -31,6 +36,13 @@ class Status < Command
 
   private def start_time(json : JSON::Any) : String
     Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y %H:%M")
+  end
+
+  private def totals_for_day(json : JSON::Any) : String
+    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+    entries = @repository.timespans(time)
+    report = Report.new(entries.as_a)
+    "#{report.total_work} (#{report.total_break})"
   end
 
   private def type(json : JSON::Any) : String

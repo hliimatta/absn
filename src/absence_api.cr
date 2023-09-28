@@ -41,6 +41,16 @@ module Absence
       JSON.parse(response)
     end
 
+    def timespans(time : Time) : JSON::Any
+      response = request(
+        "POST",
+        "/api/v2/timespans",
+        "{\"filter\":{\"start\":{\"$gte\":\"#{time.to_utc.to_s("%Y-%m-%d")}\"}}}"
+      ).body
+
+      JSON.parse(response)["data"]
+    end
+
     private def hawk_token(method : String, path : String, host : String) : String
       nonce = Random::Secure.hex(3)
       timestamp = Time.utc.to_unix
