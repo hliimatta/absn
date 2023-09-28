@@ -1,5 +1,5 @@
-class Timespan
-  def initialize(@entries : JSON::Any)
+class Report
+  def initialize(@timespans : JSON::Any)
   end
 
   def total_break : String
