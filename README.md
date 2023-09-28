@@ -39,7 +39,7 @@ $ absn -h
 ``` 
 ```shell
 $ absn
-Working since 14.06.2023 18.00
+Working since 14.06.2023 18:00 - 0h 43m (0h 0m)
 ```
 
 ```shell
@@ -49,12 +49,12 @@ Working since 14.06.2023 18.00
 
 ```shell
 $ absn b
-On a break since 14.06.2023 19:00
+On a break since 14.06.2023 18:00 - 0h 43m (0h 0m)
 ```
 
 ```shell
 $ absn s
-Last: 14.06.2023 - 01h 00m
+Last: 14.06.2023 - 1h 20m - Total: 1h 20m (0h 0m)
 ```
 
 ## License
