@@ -12,11 +12,15 @@ class Status < Command
   end
 
   private def message(json : JSON::Any) : String
-    if json["endInTimezone"]?
-      "Last: #{last_date(json)} - #{last_duration(json)}"
-    else
-      "#{type(json)} since #{start_time(json)} - #{totals_for_day(json)}"
-    end
+    json["endInTimezone"]? ? last_message(json) : active_message(json)
+  end
+
+  private def last_message(json : JSON::Any) : String
+    "Last: #{last_date(json)} - #{last_duration(json)}"
+  end
+
+  private def active_message(json : JSON::Any) : String
+    "#{type(json)} since #{start_time(json)} - #{totals_for_day(json)}"
   end
 
   private def last_date(json : JSON::Any) : String
