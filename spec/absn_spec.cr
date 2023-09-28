@@ -8,7 +8,7 @@ describe Absn do
   end
 
   it "returns current status if no commands given and working is stopped" do
-    when_command_is_run(given_status_command("./spec/timespans.json")).should eq "Last: 14.06.2023 - 1h 20m"
+    when_command_is_run(given_status_command("./spec/timespans.json")).should eq "Last: 14.06.2023 - 1h 20m - Total: 1h 20m (0h 0m)"
   end
 
   it "returns correct status if no commands given and break is started" do

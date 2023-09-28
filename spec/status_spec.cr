@@ -7,7 +7,7 @@ describe Status do
   end
 
   it "returns correct status when not working" do
-    statusmsg("./spec/timespans.json").should eq "Last: 14.06.2023 - 1h 20m"
+    statusmsg("./spec/timespans.json").should eq "Last: 14.06.2023 - 1h 20m - Total: 1h 20m (0h 0m)"
   end
 
   it "returns correct status when on a break" do

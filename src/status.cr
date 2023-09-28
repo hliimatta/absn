@@ -16,7 +16,7 @@ class Status < Command
   end
 
   private def last_message(json : JSON::Any) : String
-    "Last: #{last_date(json)} - #{last_duration(json)}"
+    "Last: #{last_date(json)} - #{last_duration(json)} - Total: #{totals_for_day(json)}"
   end
 
   private def active_message(json : JSON::Any) : String
