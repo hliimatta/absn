@@ -41,7 +41,7 @@ class Status < Command
   private def totals_for_day(json : JSON::Any) : String
     time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
     entries = @repository.timespans(time)
-    report = Report.new(entries)
+    report = Report.new(entries.as_a)
     "#{report.total_work} (#{report.total_break})"
   end
 
