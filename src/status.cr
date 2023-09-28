@@ -1,55 +1,45 @@
 require "./command.cr"
-require "./report.cr"
+require "./last_report.cr"
 require "./timespan_repository.cr"
 
 class Status < Command
   def initialize(@repository : TimespanRepository)
+    json = @repository.last
+    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+    entries = @repository.timespans(time)
+    @report = LastReport.new(entries)
   end
 
   def print(output : CliOutput) : CliOutput
-    json = @repository.last
-    output.with("message", message(json))
+    output.with("message", message)
   end
 
-  private def message(json : JSON::Any) : String
-    json["endInTimezone"]? ? last_message(json) : active_message(json)
+  private def message : String
+    @report.active? ? active_message : last_message
   end
 
-  private def last_message(json : JSON::Any) : String
-    "Last: #{last_date(json)} - #{last_duration(json)} - Total: #{totals_for_day(json)}"
+  private def last_message : String
+    "Last: #{last_date} - #{last_duration} - Total: #{totals_for_day}"
   end
 
-  private def active_message(json : JSON::Any) : String
-    "#{type(json)} since #{start_time(json)} - #{totals_for_day(json)}"
+  private def active_message : String
+    "#{@report.type} since #{start_time} - #{totals_for_day}"
   end
 
-  private def last_date(json : JSON::Any) : String
-    Time.parse!(json["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y")
+  private def last_date : String
+    @report.date("%d.%m.%Y")
   end
 
-  private def last_duration(json : JSON::Any) : String
-    end_time = Time.parse!(json["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    start_time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    span = (end_time - start_time)
-    "#{span.hours}h #{span.minutes}m"
+  private def last_duration : String
+    duration = @report.last_duration
+    "#{duration.hours}h #{duration.minutes}m"
   end
 
-  private def start_time(json : JSON::Any) : String
-    Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y %H:%M")
+  private def start_time : String
+    @report.start_time("%d.%m.%Y %H:%M")
   end
 
-  private def totals_for_day(json : JSON::Any) : String
-    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    entries = @repository.timespans(time)
-    report = Report.new(entries.as_a)
-    "#{report.total_work} (#{report.total_break})"
-  end
-
-  private def type(json : JSON::Any) : String
-    case json["type"]
-    when "work"  then "Working"
-    when "break" then "On a break"
-    else              "Unknown"
-    end
+  private def totals_for_day : String
+    "#{@report.total_work} (#{@report.total_break})"
   end
 end

@@ -1,7 +1,7 @@
 require "./spec_helper.cr"
-require "../src/report.cr"
+require "../src/last_report.cr"
 
-describe Report do
+describe LastReport do
   it "returns correct total_work" do
     report("./spec/test_data/single_item.json").total_work.should eq "1h 20m"
   end
@@ -11,10 +11,10 @@ describe Report do
   end
 end
 
-def report(file : String) : Report
-  Report.new(
+def report(file : String) : LastReport
+  LastReport.new(
     JSON.parse(
       File.read(file)
-    )["data"].as_a
+    )["data"]
   )
 end
