@@ -16,7 +16,6 @@ module Absence
           \"start\":\"#{start.to_utc.to_s("%Y-%m-%dT%H:%M:%S.%3NZ")}\",
           \"timezone\":\"#{Time.local.zone.format(false, false)}\", \"timezoneName\":\"#{Time.local.zone.name}\"}"
       ).body
-
       JSON.parse(response)
     end
 
@@ -48,7 +47,7 @@ module Absence
       response = request(
         "POST",
         "/api/v2/timespans",
-        "{\"filter\":{\"start\":{\"$gte\":\"#{time.to_utc.to_s("%Y-%m-%d")}\"}}}"
+        "{\"filter\":{\"start\":{\"$gte\":\"#{time.to_utc.to_s("%Y-%m-%d")}\"}},\"sortBy\":{\"start\":-1}}"
       ).body
 
       JSON.parse(response)["data"]

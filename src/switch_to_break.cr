@@ -1,5 +1,6 @@
 require "./command.cr"
 require "./timespan_repository.cr"
+require "./message/break_message.cr"
 
 class SwitchToBreak < Command
   def self.new(repository : TimespanRepository)
@@ -21,6 +22,6 @@ class SwitchToBreak < Command
     end
     time = Time.parse!(response["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
-    output.with("message", "On a break since #{time.to_s("%d.%m.%Y %H:%M")}")
+    output.with("message", BreakMessage.new(LastReport.new(@repository.last)).content)
   end
 end

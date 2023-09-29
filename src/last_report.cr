@@ -5,11 +5,11 @@ class LastReport
   end
 
   def active? : Bool
-    !last_entry["endInTimezone"]?
+    !last_entry()["endInTimezone"]?
   end
 
   def date(format : String) : String
-    if last_entry["endInTimezone"]?
+    if last_entry()["endInTimezone"]?
       return format_time(last_entry()["endInTimezone"], format)
     end
 
@@ -17,6 +17,9 @@ class LastReport
   end
 
   def last_duration : Time::Span
+    unless last_entry()["endInTimezone"]?
+      return Time::Span.new
+    end
     end_time = Time.parse!(last_entry()["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
     start_time = Time.parse!(last_entry()["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
@@ -60,11 +63,7 @@ class LastReport
   end
 
   def type : String
-    case last_entry()["type"]
-    when "work"  then "Working"
-    when "break" then "On a break"
-    else              "Unknown"
-    end
+    last_entry()["type"].to_s
   end
 
   private def last_entry : JSON::Any

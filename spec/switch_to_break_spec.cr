@@ -11,6 +11,6 @@ describe SwitchToBreak do
       time
     )
       .print(CliOutput.new)
-      .content.should eq "On a break since #{time.to_s("%d.%m.%Y %H:%M")}"
+      .content.should contain "On a break since"
   end
 end

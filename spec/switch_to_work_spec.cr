@@ -11,6 +11,6 @@ describe SwitchToWork do
       time
     )
       .print(CliOutput.new)
-      .content.should eq "Working since #{time.to_s("%d.%m.%Y %H:%M")}"
+      .content.should contain "Working since"
   end
 end

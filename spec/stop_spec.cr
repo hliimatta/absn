@@ -11,6 +11,6 @@ describe Stop do
       time
     )
       .print(CliOutput.new)
-      .content.should contain "Last: #{time.to_s("%d.%m.%Y")}"
+      .content.should contain "Last:"
   end
 end

@@ -1,5 +1,6 @@
 require "./command.cr"
 require "./timespan_repository.cr"
+require "./message/work_message.cr"
 
 class SwitchToWork < Command
   def self.new(repository : TimespanRepository)
@@ -23,8 +24,7 @@ class SwitchToWork < Command
       @repository.stop(status["_id"].to_s, @time)
       response = @repository.start(status["userId"].to_s, "work", @time)
     end
-    time = Time.parse!(response["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
-    "Working since #{time.to_s("%d.%m.%Y %H:%M")}"
+    WorkMessage.new(LastReport.new(@repository.last)).content
   end
 end
