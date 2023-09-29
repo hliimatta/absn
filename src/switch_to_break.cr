@@ -10,7 +10,7 @@ class SwitchToBreak < Command
   end
 
   def print(output : CliOutput) : CliOutput
-    status = @repository.last
+    status = @repository.last[0]
     response = status
     if status["endInTimezone"]?
       response = @repository.start(status["userId"].to_s, "break", @time)

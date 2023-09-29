@@ -11,7 +11,7 @@ class Stop < Command
   end
 
   def print(output : CliOutput) : CliOutput
-    status = @repository.last
+    status = @repository.last[0]
     unless status["endInTimezone"]?
       response = @repository.stop(status["_id"].to_s, @time)
       output.with("message", message(response))

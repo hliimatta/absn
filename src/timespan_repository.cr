@@ -17,7 +17,8 @@ abstract class TimespanRepository
     def last : JSON::Any
       unless @response.empty?
         json = JSON.parse(@response)
-        return json["data"][0]
+        time = Time.parse!(json["data"][0]["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+        return timespans(time)
       end
       JSON::Any.new("")
     end

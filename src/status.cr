@@ -3,11 +3,11 @@ require "./last_report.cr"
 require "./timespan_repository.cr"
 
 class Status < Command
-  def initialize(@repository : TimespanRepository)
-    json = @repository.last
-    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    entries = @repository.timespans(time)
-    @report = LastReport.new(entries)
+  def self.new(repository : TimespanRepository)
+    self.new(LastReport.new(repository.last))
+  end
+
+  def initialize(@report : LastReport)
   end
 
   def print(output : CliOutput) : CliOutput

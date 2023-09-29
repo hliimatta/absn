@@ -1,10 +1,9 @@
 require "json"
 
 class LastReport
-  
   def initialize(@timespans : JSON::Any)
   end
-  
+
   def active? : Bool
     !last_entry["endInTimezone"]?
   end
@@ -56,7 +55,7 @@ class LastReport
       return "0h 0m"
     end
     span = end_time.max - start_time.min
-    
+
     "#{span.hours}h #{span.minutes}m"
   end
 
@@ -73,6 +72,6 @@ class LastReport
   end
 
   private def format_time(time : JSON::Any, format : String) : String
-    Time.parse!(time.to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y")    
+    Time.parse!(time.to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s("%d.%m.%Y")
   end
 end

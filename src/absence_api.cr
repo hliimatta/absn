@@ -21,13 +21,16 @@ module Absence
     end
 
     def last : JSON::Any
-      JSON.parse(
+      json = JSON.parse(
         request(
           "POST",
           "/api/v2/timespans",
           "{\"sortBy\":{\"start\":-1}}"
         ).body
-      )["data"][0]
+      )
+      time = Time.parse!(json["data"][0]["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+
+      timespans(time)
     end
 
     def stop(timespanId : String, stop : Time) : JSON::Any
