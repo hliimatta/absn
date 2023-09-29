@@ -4,11 +4,7 @@ require "./timespan_repository.cr"
 require "./message/last_message.cr"
 
 class Status < Command
-  def self.new(repository : TimespanRepository)
-    self.new(LastReport.new(repository.last))
-  end
-
-  def initialize(@report : LastReport)
+  def initialize(@repository : TimespanRepository)
   end
 
   def print(output : CliOutput) : CliOutput
@@ -16,10 +12,11 @@ class Status < Command
   end
 
   private def message : String
-    @report.active? ? active_message : LastMessage.new(@report).content
+    report = LastReport.new(@repository.last)
+    report.active? ? active_message(report) : LastMessage.new(report).content
   end
 
-  private def active_message : String
-    @report.type == "work" ? WorkMessage.new(@report).content : BreakMessage.new(@report).content
+  private def active_message(report : LastReport) : String
+    report.type == "work" ? WorkMessage.new(report).content : BreakMessage.new(report).content
   end
 end
