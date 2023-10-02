@@ -8,17 +8,6 @@ module Absence
     def initialize(@api_id : String, @api_key : String)
     end
 
-    def start(userId : String, type : String, start : Time) : JSON::Any
-      response = request(
-        "POST",
-        "/api/v2/timespans/create",
-        "{\"userId\":\"#{userId}\",\"type\":\"#{type}\",
-          \"start\":\"#{start.to_utc.to_s("%Y-%m-%dT%H:%M:%S.%3NZ")}\",
-          \"timezone\":\"#{Time.local.zone.format(false, false)}\", \"timezoneName\":\"#{Time.local.zone.name}\"}"
-      ).body
-      JSON.parse(response)
-    end
-
     def last : JSON::Any
       json = JSON.parse(
         request(
@@ -30,6 +19,21 @@ module Absence
       time = Time.parse!(json["data"][0]["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
       timespans(time)
+    end
+
+    def start(userId : String, type : String, start : Time) : JSON::Any
+      response = request(
+        "POST",
+        "/api/v2/timespans/create",
+        "{\"userId\":\"#{userId}\",\"type\":\"#{type}\",
+          \"start\":\"#{start.to_utc.to_s("%Y-%m-%dT%H:%M:%S.%3NZ")}\",
+          \"timezone\":\"#{Time.local.zone.format(false, false)}\", \"timezoneName\":\"#{Time.local.zone.name}\"}"
+      ).body
+      JSON.parse(response)
+    end
+
+    def status : JSON::Any
+      last[0]
     end
 
     def stop(timespanId : String, stop : Time) : JSON::Any

@@ -15,7 +15,7 @@ class SwitchToWork < Command
   end
 
   private def switch_to_work : String
-    status = @repository.last[0]
+    status = @repository.status
     response = status
     if status["endInTimezone"]?
       response = @repository.start(status["userId"].to_s, "work", @time)
