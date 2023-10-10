@@ -15,16 +15,15 @@ class SwitchToWork < Command
   end
 
   private def switch_to_work : String
-    status = @repository.status
-    response = status
-    if status["endInTimezone"]?
-      response = @repository.start(status["userId"].to_s, "work", @time)
+    status = CurrentStatus.new(@repository.last)
+    unless status.active?
+      @repository.start(status.user_id, "work", @time)
     end
-    if status["type"] == "break"
-      @repository.stop(status["_id"].to_s, @time)
-      response = @repository.start(status["userId"].to_s, "work", @time)
+    if status.type == "break"
+      @repository.stop(status.id, @time)
+      @repository.start(status.user_id, "work", @time)
     end
 
-    WorkMessage.new(CurrentStatus.new(@repository.last)).content
+    WorkMessage.new(status).content
   end
 end

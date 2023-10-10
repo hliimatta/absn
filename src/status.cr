@@ -12,7 +12,7 @@ class Status < Command
   end
 
   private def message : String
-    status = CurrentStatus.new(@repository.last)
+    status = CurrentStatus.new(@repository)
     status.active? ? active_message(status) : LastMessage.new(status).content
   end
 
