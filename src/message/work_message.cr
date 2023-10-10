@@ -3,14 +3,14 @@ class WorkMessage
   end
 
   def content : String
-    "Working since #{start_time} - #{totals_for_day}"
+    "Working since #{start_time} - #{totals}"
   end
 
   private def start_time : String
-    @status.start_time("%d.%m.%Y %H:%M")
+    @status.started("%d.%m.%Y %H:%M")
   end
 
-  private def totals_for_day : String
+  private def totals : String
     "#{@status.total_work} (#{@status.total_break})"
   end
 end

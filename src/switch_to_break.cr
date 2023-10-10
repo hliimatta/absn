@@ -12,16 +12,15 @@ class SwitchToBreak < Command
   end
 
   def print(output : CliOutput) : CliOutput
-    status = @repository.status
-    response = status
-    if status["endInTimezone"]?
-      response = @repository.start(status["userId"].to_s, "break", @time)
+    status = CurrentStatus.new(@repository)
+    unless status.active?
+      @repository.start(status.user_id, "break", @time)
     end
-    if status["type"] == "work"
-      @repository.stop(status["_id"].to_s, @time)
-      response = @repository.start(status["userId"].to_s, "break", @time)
+    if status.type == "work"
+      @repository.stop(status.id, @time)
+      @repository.start(status.user_id, "break", @time)
     end
 
-    output.with("message", BreakMessage.new(CurrentStatus.new(@repository.last)).content)
+    output.with("message", BreakMessage.new(status).content)
   end
 end

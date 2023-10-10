@@ -2,7 +2,7 @@ require "json"
 
 class CurrentStatus
   def self.new(timespan_repository : TimespanRepository)
-    self.new(timespan_repository.last_day_timespans)
+    self.new(timespan_repository.last)
   end
   
   def initialize(@timespans : JSON::Any)
@@ -20,17 +20,22 @@ class CurrentStatus
     format_time(last_entry["startInTimezone"], format)
   end
 
-  def last_duration : Time::Span
-    unless last_entry["endInTimezone"]?
-      return Time::Span.new
+  def duration : Time::Span
+    if last_entry["endInTimezone"]?
+      end_time = Time.parse!(last_entry["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+      start_time = Time.parse!(last_entry["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+    
+      return (end_time - start_time)
     end
-    end_time = Time.parse!(last_entry["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    start_time = Time.parse!(last_entry["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
-    (end_time - start_time)
+    Time::Span.new
   end
 
-  def start_time(format : String) : String
+  def id : String
+    last_entry["_id"].to_s
+  end
+
+  def started(format : String) : String
     Time.parse!(last_entry["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z").to_s(format)
   end
 
@@ -48,6 +53,10 @@ class CurrentStatus
 
   def type : String
     last_entry["type"].to_s
+  end
+
+  def user_id : String
+    last_entry["userId"].to_s
   end
 
   private def sum_time(type : String) : Time::Span

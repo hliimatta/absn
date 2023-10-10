@@ -7,7 +7,7 @@ class BreakMessage
   end
 
   private def start_time : String
-    @status.start_time("%d.%m.%Y %H:%M")
+    @status.started("%d.%m.%Y %H:%M")
   end
 
   private def totals_for_day : String

@@ -1,21 +1,21 @@
 class LastMessage
-  def initialize(@timespans : CurrentStatus)
+  def initialize(@status : CurrentStatus)
   end
 
   def content : String
-    "Last: #{last_date} - #{last_duration} - Total: #{totals_for_day}"
+    "Last: #{last_date} - #{last_duration} - Total: #{totals}"
   end
 
   private def last_date : String
-    @timespans.date("%d.%m.%Y")
+    @status.date("%d.%m.%Y")
   end
 
   private def last_duration : String
-    duration = @timespans.last_duration
+    duration = @status.duration
     "#{duration.hours}h #{duration.minutes}m"
   end
 
-  private def totals_for_day : String
-    "#{@timespans.total_work} (#{@timespans.total_break})"
+  private def totals : String
+    "#{@status.total_work} (#{@status.total_break})"
   end
 end
