@@ -15,7 +15,6 @@ describe CurrentStatus do
   end
 
   it "returns correct total_work when working" do
-
   end
 end
 
@@ -28,5 +27,5 @@ def status(file : String) : CurrentStatus
 end
 
 def when_total_work_is_printed(filename : String, expected : String) : Void
-    status("./spec/test_data/#{filename}.json").total_work.should eq expected
+  status("./spec/test_data/#{filename}.json").total_work.should eq expected
 end

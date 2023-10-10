@@ -4,7 +4,7 @@ class CurrentStatus
   def self.new(timespan_repository : TimespanRepository)
     self.new(timespan_repository.last)
   end
-  
+
   def initialize(@timespans : JSON::Any)
   end
 
@@ -24,7 +24,7 @@ class CurrentStatus
     if last_entry["endInTimezone"]?
       end_time = Time.parse!(last_entry["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
       start_time = Time.parse!(last_entry["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    
+
       return (end_time - start_time)
     end
 
@@ -60,13 +60,13 @@ class CurrentStatus
   end
 
   private def sum_time(type : String) : Time::Span
-    total = Time::Span.new 
+    total = Time::Span.new
     @timespans.as_a.each do |timespan|
       if timespan["type"] == type
         if timespan["endInTimezone"]?
-            end_time = Time.parse!(timespan["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+          end_time = Time.parse!(timespan["endInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
         else
-            end_time = Time.local(Time::Location.load("Europe/Helsinki"))
+          end_time = Time.local(Time::Location.load("Europe/Helsinki"))
         end
         start_time = Time.parse!(timespan["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
         total = total + (end_time - start_time)
