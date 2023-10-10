@@ -1,5 +1,5 @@
 class LastMessage
-  def initialize(@report : LastReport)
+  def initialize(@timespans : CurrentStatus)
   end
 
   def content : String
@@ -7,15 +7,15 @@ class LastMessage
   end
 
   private def last_date : String
-    @report.date("%d.%m.%Y")
+    @timespans.date("%d.%m.%Y")
   end
 
   private def last_duration : String
-    duration = @report.last_duration
+    duration = @timespans.last_duration
     "#{duration.hours}h #{duration.minutes}m"
   end
 
   private def totals_for_day : String
-    "#{@report.total_work} (#{@report.total_break})"
+    "#{@timespans.total_work} (#{@timespans.total_break})"
   end
 end

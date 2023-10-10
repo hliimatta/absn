@@ -25,6 +25,6 @@ class SwitchToWork < Command
       response = @repository.start(status["userId"].to_s, "work", @time)
     end
 
-    WorkMessage.new(LastReport.new(@repository.last)).content
+    WorkMessage.new(CurrentStatus.new(@repository.last)).content
   end
 end

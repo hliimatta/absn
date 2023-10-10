@@ -1,5 +1,5 @@
 class BreakMessage
-  def initialize(@report : LastReport)
+  def initialize(@status : CurrentStatus)
   end
 
   def content : String
@@ -7,10 +7,10 @@ class BreakMessage
   end
 
   private def start_time : String
-    @report.start_time("%d.%m.%Y %H:%M")
+    @status.start_time("%d.%m.%Y %H:%M")
   end
 
   private def totals_for_day : String
-    "#{@report.total_work} (#{@report.total_break})"
+    "#{@status.total_work} (#{@status.total_break})"
   end
 end

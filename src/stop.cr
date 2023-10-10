@@ -1,5 +1,6 @@
 require "json"
 require "./command.cr"
+require "./current_status.cr"
 require "./timespan_repository.cr"
 
 class Stop < Command
@@ -16,6 +17,6 @@ class Stop < Command
       @repository.stop(status["_id"].to_s, @time)
     end
 
-    output.with("message", LastMessage.new(LastReport.new(@repository.last)).content)
+    output.with("message", LastMessage.new(CurrentStatus.new(@repository.last)).content)
   end
 end

@@ -1,4 +1,5 @@
 require "./command.cr"
+require "./current_status.cr"
 require "./timespan_repository.cr"
 require "./message/break_message.cr"
 
@@ -21,6 +22,6 @@ class SwitchToBreak < Command
       response = @repository.start(status["userId"].to_s, "break", @time)
     end
 
-    output.with("message", BreakMessage.new(LastReport.new(@repository.last)).content)
+    output.with("message", BreakMessage.new(CurrentStatus.new(@repository.last)).content)
   end
 end
