@@ -17,6 +17,6 @@ class Stop < Command
       @repository.stop(status.id, @time)
     end
 
-    output.with("message", LastMessage.new(status).content)
+    output.with_content(LastMessage.new(status).content)
   end
 end

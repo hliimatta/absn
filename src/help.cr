@@ -13,6 +13,6 @@ Usage: absn [options] [command]
     b           start/switch to break
     s           stop current timer"
 
-    output.with("message", message)
+    output.with_content(message)
   end
 end

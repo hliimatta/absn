@@ -11,7 +11,7 @@ class SwitchToWork < Command
   end
 
   def print(output : Output) : Output
-    output.with("message", switch_to_work)
+    output.with_content(switch_to_work)
   end
 
   private def switch_to_work : String
