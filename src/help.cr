@@ -1,7 +1,7 @@
 require "./command.cr"
 
 class Help < Command
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     message = "
 Usage: absn [options] [command]
 
