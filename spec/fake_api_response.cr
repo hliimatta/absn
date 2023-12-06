@@ -1,8 +1,8 @@
 class FakeApiEntry
-  def initialize(@type : String, @start_time : Time, @end_time : Time|Nil)
+  def initialize(@type : String, @start_time : Time, @end_time : Time | Nil)
   end
 
-  def end_time : Time|Nil
+  def end_time : Time | Nil
     @end_time
   end
 
@@ -20,17 +20,17 @@ class FakeApiResponse
     %({"data":
         [
           #{times.map do |time|
-            create_entry(
-              time.type, 
-              time.start_time,
-              time.end_time
-            )
-          end.join(",")}
+              create_entry(
+                time.type,
+                time.start_time,
+                time.end_time
+              )
+            end.join(",")}
         ]
       })
   end
 
-  private def create_entry(type : String, start_time : Time, end_time : Time|Nil) : String
+  private def create_entry(type : String, start_time : Time, end_time : Time | Nil) : String
     start = start_time.to_s("%Y-%m-%dT%H:%M:%S.000Z")
     end_ = end_time ? end_time.to_s("%Y-%m-%dT%H:%M:%S.000Z") : "null"
     %({

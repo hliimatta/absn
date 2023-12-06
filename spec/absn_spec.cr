@@ -7,21 +7,21 @@ describe Absn do
   it "returns correct status when working" do
     time = Time.utc - 1.hour
     status_when_given_entries([
-      given_entry("work", time)
+      given_entry("work", time),
     ]).should eq expected_response_when_working(time)
   end
 
   it "returns correct status when working is stopped" do
     start = Time.utc - 2.hour
     status_when_given_entries([
-      given_entry("work", start, 1.hour)
+      given_entry("work", start, 1.hour),
     ]).should eq expected_response_when_stopped(start + 1.hour, 1.hour, 1.hour, Time::Span.new)
   end
 
   it "returns correct status when break is started" do
     time = Time.utc - 1.hour
     status_when_given_entries([
-      given_entry("break", time)
+      given_entry("break", time),
     ]).should eq expected_response_when_on_break(time)
   end
 
@@ -31,7 +31,7 @@ describe Absn do
 
     status_when_given_entries([
       given_entry("work", start1, 1.hour),
-      given_entry("work", start2, 1.hour)
+      given_entry("work", start2, 1.hour),
     ]).should eq expected_response_when_stopped(start1 + 1.hour, 1.hour, 2.hours, Time::Span.new)
   end
 
@@ -49,7 +49,7 @@ describe Absn do
       given_entry("work", work_start1, 1.hour),
       given_entry("break", break_start1, 1.hour),
       given_entry("work", work_start2, 1.hour),
-      given_entry("break", break_start2, 1.hour)
+      given_entry("break", break_start2, 1.hour),
     ]).should eq expected_response_when_stopped(work_stop1, 1.hour, work_total, break_total)
   end
 end
@@ -93,4 +93,3 @@ private def status_when_given_entries(times : Array(FakeApiEntry)) : String
     status_command(FakeApiResponse.new.to_json(times))
   )
 end
-
