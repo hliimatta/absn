@@ -1,5 +1,7 @@
 require "./command.cr"
+require "./current_status.cr"
 require "./timespan_repository.cr"
+require "./message/break_message.cr"
 
 class SwitchToBreak < Command
   def self.new(repository : TimespanRepository)
@@ -10,17 +12,15 @@ class SwitchToBreak < Command
   end
 
   def print(output : CliOutput) : CliOutput
-    status = @repository.last
-    response = status
-    if status["endInTimezone"]?
-      response = @repository.start(status["userId"].to_s, "break", @time)
+    status = CurrentStatus.new(@repository)
+    unless status.active?
+      @repository.start(status.user_id, "break", @time)
     end
-    if status["type"] == "work"
-      @repository.stop(status["_id"].to_s, @time)
-      response = @repository.start(status["userId"].to_s, "break", @time)
+    if status.type == "work"
+      @repository.stop(status.id, @time)
+      @repository.start(status.user_id, "break", @time)
     end
-    time = Time.parse!(response["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
 
-    output.with("message", "On a break since #{time.to_s("%d.%m.%Y %H:%M")}")
+    output.with("message", BreakMessage.new(status).content)
   end
 end

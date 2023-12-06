@@ -8,6 +8,19 @@ module Absence
     def initialize(@api_id : String, @api_key : String)
     end
 
+    def last : JSON::Any
+      json = JSON.parse(
+        request(
+          "POST",
+          "/api/v2/timespans",
+          "{\"sortBy\":{\"start\":-1}}"
+        ).body
+      )
+      time = Time.parse!(json["data"][0]["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+
+      timespans(time)
+    end
+
     def start(userId : String, type : String, start : Time) : JSON::Any
       response = request(
         "POST",
@@ -16,18 +29,11 @@ module Absence
           \"start\":\"#{start.to_utc.to_s("%Y-%m-%dT%H:%M:%S.%3NZ")}\",
           \"timezone\":\"#{Time.local.zone.format(false, false)}\", \"timezoneName\":\"#{Time.local.zone.name}\"}"
       ).body
-
       JSON.parse(response)
     end
 
-    def last : JSON::Any
-      JSON.parse(
-        request(
-          "POST",
-          "/api/v2/timespans",
-          "{\"sortBy\":{\"start\":-1}}"
-        ).body
-      )["data"][0]
+    def status : JSON::Any
+      last[0]
     end
 
     def stop(timespanId : String, stop : Time) : JSON::Any
@@ -45,7 +51,7 @@ module Absence
       response = request(
         "POST",
         "/api/v2/timespans",
-        "{\"filter\":{\"start\":{\"$gte\":\"#{time.to_utc.to_s("%Y-%m-%d")}\"}}}"
+        "{\"filter\":{\"start\":{\"$gte\":\"#{time.to_utc.to_s("%Y-%m-%d")}\"}},\"sortBy\":{\"start\":-1}}"
       ).body
 
       JSON.parse(response)["data"]

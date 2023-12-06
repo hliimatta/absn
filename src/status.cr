@@ -1,13 +1,10 @@
 require "./command.cr"
-require "./last_report.cr"
+require "./current_status.cr"
 require "./timespan_repository.cr"
+require "./message/last_message.cr"
 
 class Status < Command
   def initialize(@repository : TimespanRepository)
-    json = @repository.last
-    time = Time.parse!(json["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
-    entries = @repository.timespans(time)
-    @report = LastReport.new(entries)
   end
 
   def print(output : CliOutput) : CliOutput
@@ -15,31 +12,11 @@ class Status < Command
   end
 
   private def message : String
-    @report.active? ? active_message : last_message
+    status = CurrentStatus.new(@repository)
+    status.active? ? active_message(status) : LastMessage.new(status).content
   end
 
-  private def last_message : String
-    "Last: #{last_date} - #{last_duration} - Total: #{totals_for_day}"
-  end
-
-  private def active_message : String
-    "#{@report.type} since #{start_time} - #{totals_for_day}"
-  end
-
-  private def last_date : String
-    @report.date("%d.%m.%Y")
-  end
-
-  private def last_duration : String
-    duration = @report.last_duration
-    "#{duration.hours}h #{duration.minutes}m"
-  end
-
-  private def start_time : String
-    @report.start_time("%d.%m.%Y %H:%M")
-  end
-
-  private def totals_for_day : String
-    "#{@report.total_work} (#{@report.total_break})"
+  private def active_message(status : CurrentStatus) : String
+    status.type == "work" ? WorkMessage.new(status).content : BreakMessage.new(status).content
   end
 end

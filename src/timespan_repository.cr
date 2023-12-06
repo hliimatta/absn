@@ -3,6 +3,7 @@ require "json"
 abstract class TimespanRepository
   abstract def last : JSON::Any
   abstract def start(userId : String, type : String, start : Time) : JSON::Any
+  abstract def status : JSON::Any
   abstract def stop(timespanId : String, stop : Time) : JSON::Any
   abstract def timespans(time : Time) : JSON::Any
 
@@ -17,7 +18,8 @@ abstract class TimespanRepository
     def last : JSON::Any
       unless @response.empty?
         json = JSON.parse(@response)
-        return json["data"][0]
+        time = Time.parse!(json["data"][0]["startInTimezone"].to_s, "%Y-%m-%dT%H:%M:%S.%3N%z")
+        return timespans(time)
       end
       JSON::Any.new("")
     end
@@ -31,6 +33,10 @@ abstract class TimespanRepository
         return JSON.parse(hash.to_json)
       end
       JSON::Any.new("")
+    end
+
+    def status : JSON::Any
+      last[0]
     end
 
     def stop(timespanId : String, stop : Time) : JSON::Any
