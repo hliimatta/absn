@@ -29,16 +29,11 @@ class Absn
           Fork.new("s", Stop.new(absence_api)),
           Fork.new("-h", Help.new),
         ]
-      ),
-      Config.new(config_file)
+      )
     )
   end
 
-  def self.new(command : Command)
-    self.new(command, Config.new(""))
-  end
-
-  def initialize(@command : Command, @config : Config)
+  def initialize(@command : Command)
   end
 
   def print(output : Output) : Output
