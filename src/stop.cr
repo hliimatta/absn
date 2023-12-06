@@ -11,7 +11,7 @@ class Stop < Command
   def initialize(@repository : TimespanRepository, @time : Time)
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     status = CurrentStatus.new(@repository)
     if status.active?
       @repository.stop(status.id, @time)

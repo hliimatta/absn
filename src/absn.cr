@@ -5,6 +5,7 @@ require "./status.cr"
 require "./command.cr"
 require "./cli_output.cr"
 require "./forked_command.cr"
+require "./output.cr"
 require "./switch_to_work.cr"
 require "./switch_to_break.cr"
 require "./stop.cr"
@@ -28,19 +29,15 @@ class Absn
           Fork.new("s", Stop.new(absence_api)),
           Fork.new("-h", Help.new),
         ]
-      ),
-      Config.new(config_file)
+      )
     )
   end
 
-  def self.new(command : Command)
-    self.new(command, Config.new(""))
+  def initialize(@command : Command)
   end
 
-  def initialize(@command : Command, @config : Config)
-  end
-
-  def run(output : CliOutput) : String
-    @command.print(output).content
+  def print(output : Output) : Output
+    @command.print(output) 
   end
 end
+

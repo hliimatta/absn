@@ -1,6 +1,7 @@
 require "./command.cr"
 require "./current_status.cr"
 require "./timespan_repository.cr"
+require "./output.cr"
 require "./message/break_message.cr"
 
 class SwitchToBreak < Command
@@ -11,7 +12,7 @@ class SwitchToBreak < Command
   def initialize(@repository : TimespanRepository, @time : Time)
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     status = CurrentStatus.new(@repository)
     unless status.active?
       @repository.start(status.user_id, "break", @time)

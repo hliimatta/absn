@@ -77,7 +77,7 @@ private def given_entry(type : String, start : Time, length : Time::Span) : Fake
 end
 
 private def output_for(command : Command) : String
-  Absn.new(command).run(CliOutput.new)
+  Absn.new(command).print(CliOutput.new).to_s
 end
 
 private def status_command(json : String) : Command

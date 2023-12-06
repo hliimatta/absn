@@ -1,5 +1,6 @@
 require "./command.cr"
 require "./current_status.cr"
+require "./output.cr"
 require "./timespan_repository.cr"
 require "./message/last_message.cr"
 
@@ -7,7 +8,7 @@ class Status < Command
   def initialize(@repository : TimespanRepository)
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     output.with("message", message)
   end
 

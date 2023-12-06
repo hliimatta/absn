@@ -10,7 +10,7 @@ class SwitchToWork < Command
   def initialize(@repository : TimespanRepository, @time : Time)
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     output.with("message", switch_to_work)
   end
 

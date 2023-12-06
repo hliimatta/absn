@@ -6,7 +6,7 @@ class ForkedCommand < Command
   def initialize(@flag : String, @forks : Array(Fork))
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     @forks.each do |fork|
       return fork.print(output) if fork.match?(@flag)
     end
@@ -23,7 +23,7 @@ class Fork
     @flag == flag
   end
 
-  def print(output : CliOutput) : CliOutput
+  def print(output : Output) : Output
     @command.print(output)
   end
 end
