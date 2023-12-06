@@ -2,16 +2,16 @@ class FakeApiEntry
   def initialize(@type : String, @start_time : Time, @end_time : Time|Nil)
   end
 
-  def type : String
-    @type
+  def end_time : Time|Nil
+    @end_time
   end
 
   def start_time : Time
     @start_time
   end
 
-  def end_time : Time|Nil
-    @end_time
+  def type : String
+    @type
   end
 end
 
