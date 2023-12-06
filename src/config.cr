@@ -1,9 +1,4 @@
 require "json"
-require "system/user"
-
-lib LibC
-  fun getuid : UidT
-end
 
 class Config
   @id : String
