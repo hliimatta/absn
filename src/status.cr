@@ -9,7 +9,7 @@ class Status < Command
   end
 
   def print(output : Output) : Output
-    output.with("message", message)
+    output.with_content(message)
   end
 
   private def message : String

@@ -8,7 +8,7 @@ abstract class Command
     end
 
     def print(output : Output) : Output
-      output.with("message", @output)
+      output.with_content(@output)
     end
   end
 end

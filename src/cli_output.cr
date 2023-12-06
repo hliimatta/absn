@@ -2,17 +2,17 @@ require "./output.cr"
 
 class CliOutput < Output
   def self.new
-    CliOutput.new({"message" => ""})
+    CliOutput.new("")
   end
 
-  def initialize(@values : Hash(String, String))
+  def initialize(@content : String)
   end
 
-  def with(key : String, value : String) : Output
-    CliOutput.new(@values.merge({key => value}))
+  def with_content(content : String) : Output
+    CliOutput.new(content)
   end
 
   def to_s : String
-    @values["message"]
+    @content
   end
 end

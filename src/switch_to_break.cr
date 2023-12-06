@@ -22,6 +22,6 @@ class SwitchToBreak < Command
       @repository.start(status.user_id, "break", @time)
     end
 
-    output.with("message", BreakMessage.new(status).content)
+    output.with_content(BreakMessage.new(status).content)
   end
 end
