@@ -1,4 +1,5 @@
 require "json"
+require "./timespan_repository.cr"
 
 class CurrentStatus
   def self.new(timespan_repository : TimespanRepository)
