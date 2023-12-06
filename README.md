@@ -5,10 +5,8 @@ Small command line tool for absence.io time tracker.
 
 ## Installation
 
-Build application:
-
 ```
-crystal build --release --no-debug src/app.cr
+make install
 ```
 
 ## Configuration

@@ -1,3 +1,2 @@
-release-install:
-	crystal build --release --no-debug src/app.cr
-	cp app ~/bin/absn
+install:
+	crystal build --release --no-debug src/app.cr -o /usr/local/bin/absn
