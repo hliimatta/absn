@@ -1,4 +1,4 @@
-class FakeEntry
+class FakeApiEntry
   def initialize(@type : String, @start_time : Time, @end_time : Time|Nil)
   end
 
@@ -16,7 +16,7 @@ class FakeEntry
 end
 
 class FakeApiResponse
-  def when_multiple_entries(times : Array(FakeEntry)) : String
+  def to_json(times : Array(FakeApiEntry)) : String
     %({"data":
         [
           #{times.map do |time|
@@ -29,31 +29,6 @@ class FakeApiResponse
         ]
       })
   end
-
-  def when_working(work_started : Time) : String
-    %({"data":
-        [
-          #{create_entry("work", work_started, nil)}
-        ]
-      })
-  end
-
-  def when_on_break(break_started : Time) : String
-    %({"data":
-        [
-          #{create_entry("break", break_started, nil)}
-        ]
-      })
-  end
-
-  def when_stopped(start : Time, stop : Time) : String
-    %({"data":
-        [
-          #{create_entry("work", start, stop)}
-        ]
-      })
-  end
-
 
   private def create_entry(type : String, start_time : Time, end_time : Time|Nil) : String
     start = start_time.to_s("%Y-%m-%dT%H:%M:%S.000Z")

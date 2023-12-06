@@ -54,12 +54,12 @@ describe Absn do
   end
 end
 
-private def given_entry(type : String, start : Time) : FakeEntry
-  FakeEntry.new(type, start, nil)
+private def given_entry(type : String, start : Time) : FakeApiEntry
+  FakeApiEntry.new(type, start, nil)
 end
 
-private def given_entry(type : String, start : Time, length : Time::Span) : FakeEntry
-  FakeEntry.new(type, start, start + length)
+private def given_entry(type : String, start : Time, length : Time::Span) : FakeApiEntry
+  FakeApiEntry.new(type, start, start + length)
 end
 
 private def expected_response_when_stopped(stop : Time, last : Time::Span, total : Time::Span, break_total : Time::Span) : String
@@ -76,9 +76,9 @@ private def expected_response_when_on_break(break_started : Time) : String
   "On a break since #{break_started.to_s("%d.%m.%Y %H:%M")} - 0h 0m (#{total.hours}h #{total.minutes}m)"
 end
 
-private def status_when_given_entries(times : Array(FakeEntry)) : String
+private def status_when_given_entries(times : Array(FakeApiEntry)) : String
   output_for(
-    status_command(FakeApiResponse.new.when_multiple_entries(times))
+    status_command(FakeApiResponse.new.to_json(times))
   )
 end
 
@@ -86,10 +86,10 @@ private def output_for(command : Command) : String
   Absn.new(command).run(CliOutput.new)
 end
 
-private def status_command(file : String) : Command
+private def status_command(json : String) : Command
   Status.new(
     TimespanRepository::Fake.new(
-      file
+      json
     )
   )
 end
